@@ -12,7 +12,7 @@ public class Activity
     
     public required string Category { get; set; }
     
-    public bool isCancelled { get; set; }
+    public bool IsCancelled { get; set; }
 
     //location props
     public required string City { get; set; }
