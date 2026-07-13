@@ -1,4 +1,5 @@
 using API.Middleware;
+using API.SignalR;
 using Application.Activities.Queries;
 using Application.Activities.Validators;
 using Application.Core;
@@ -27,6 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
+builder.Services.AddSignalR();
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>());
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
@@ -57,7 +59,8 @@ WithOrigins("http://localhost:3000","https://localhost:3000"));
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapGroup("api").MapIdentityApi<User>();
+app.MapGroup("api").MapIdentityApi<User>(); //api/login
+app.MapHub<CommentHub>("/comments");
 
 using var scope= app.Services.CreateScope();
 var services = scope.ServiceProvider;

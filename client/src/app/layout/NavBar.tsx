@@ -21,13 +21,13 @@ export default function NavBar() {
   const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
 
-  const navLinks = (
-    <>
-      <MenuItemLink to='/activities' onClick={handleMenuClose}>Activities</MenuItemLink>
-      <MenuItemLink to='/counter' onClick={handleMenuClose}>Counter</MenuItemLink>
-      <MenuItemLink to='/errors' onClick={handleMenuClose}>Errors</MenuItemLink>
-    </>
-  );
+
+  const navLinks = [
+    <MenuItemLink key="activities" to='/activities' onClick={handleMenuClose}>Activities</MenuItemLink>,
+    <MenuItemLink key="counter" to='/counter' onClick={handleMenuClose}>Counter</MenuItemLink>,
+    <MenuItemLink key="errors" to='/errors' onClick={handleMenuClose}>Errors</MenuItemLink>
+  ];
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
