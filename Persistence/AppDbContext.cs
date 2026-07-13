@@ -6,17 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Persistence;
 
-public class AppDbContext(DbContextOptions options) : IdentityDbContext<User> (options)
+public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
 {
- public required DbSet<Activity> Activities { get; set; }
- public required DbSet<ActivityAttendee> ActivityAttendees { get; set; }
- public required DbSet<Photo> Photos { get; set; }
- public required DbSet<Comment> Comments { get; set; }
+    public required DbSet<Activity> Activities { get; set; }
+    public required DbSet<ActivityAttendee> ActivityAttendees { get; set; }
+    public required DbSet<Photo> Photos { get; set; }
+    public required DbSet<Comment> Comments { get; set; }
+    public required DbSet<UserFollowing> UserFollowings { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<ActivityAttendee>(x => x.HasKey(a => new {a.ActivityId, a.UserId}));
+        builder.Entity<ActivityAttendee>(x => x.HasKey(a => new { a.ActivityId, a.UserId }));
         builder.Entity<ActivityAttendee>()
         .HasOne(x => x.User)
         .WithMany(x => x.Activities)
@@ -25,6 +27,17 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<User> (o
         .HasOne(x => x.Activity)
         .WithMany(x => x.Attendees)
         .HasForeignKey(x => x.ActivityId);
+        builder.Entity<UserFollowing>(x =>
+        {
+            x.HasKey(k => new { k.ObserverId, k.TargetId });
+            x.HasOne(o => o.Observer)
+             .WithMany(f => f.Followings)
+             .OnDelete(DeleteBehavior.Cascade);
+            x.HasOne(o => o.Target)
+             .WithMany(f => f.Followers)
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
         var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
             v => v.ToUniversalTime(),
             v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
