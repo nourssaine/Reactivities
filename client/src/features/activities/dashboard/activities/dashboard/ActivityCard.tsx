@@ -9,15 +9,21 @@ type Props = {
     activity: Activity
 }
 export default function ActivityCard({ activity }: Props) {
-    
+
     const label = activity.isHost ? 'You are hosting ' : 'You are going';
-   
+
     const color = activity.isHost ? 'secondary' : activity.isGoing ? 'warning' : 'default';
     return (
         <Card elevation={3} sx={{ borderRadius: 3 }}>
             <Box display='flex' alignItems='center' justifyContent='space-between'>
                 <CardHeader
-                    avatar={<Avatar src={activity.hostImageUrl} alt='image of host' sx={{ Height: 80, width: 80 }} />}
+                    avatar={
+                        <Avatar
+                            src={activity.hostImageUrl}
+                            alt='image of host'
+                            sx={{ height: 80, width: 80 }}
+                        />
+                    }
                     title={activity.title}
                     titleTypographyProps={{
                         fontWeight: 'bold',
@@ -50,10 +56,10 @@ export default function ActivityCard({ activity }: Props) {
                 </Box>
                 <Divider />
                 <Box display='flex' gap={2} sx={{ backgroundColor: 'grey.200', py: 3, pl: 3 }}>
-                   {activity.attendees.map(att => (
-                    <AvatarPopover profile={att} key={att.id}
-                    />
-                   ))}
+                    {activity.attendees.map(att => (
+                        <AvatarPopover profile={att} key={att.id}
+                        />
+                    ))}
                 </Box>
             </CardContent>
             <CardContent sx={{ pb: 2 }}>

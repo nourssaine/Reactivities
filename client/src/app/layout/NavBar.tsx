@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Group, Menu as MenuIcon } from "@mui/icons-material";
 import {
-  AppBar, Box, Container, IconButton, LinearProgress, Menu,
+  AppBar, Box, CircularProgress, Container, IconButton, LinearProgress, Menu,
   MenuItem, Toolbar, Typography, useMediaQuery, useTheme
 } from "@mui/material";
 import { NavLink } from "react-router";
@@ -31,7 +31,7 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundImage: 'linear-gradient(135deg, #182a73 0%,#218aae 69%, #20a7ac 89%)' }}>
+      <AppBar position="fixed" sx={{ backgroundImage: 'linear-gradient(135deg, #182a73 0%,#218aae 69%, #20a7ac 89%)' }}>
         <Container maxWidth='xl'>
           <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box>
@@ -40,6 +40,15 @@ export default function NavBar() {
                 <Typography variant="h5" fontWeight='bold' component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
                   Reactivities
                 </Typography>
+                <Observer>
+                  {() => uiStore.isLoading ? (
+                    <CircularProgress
+                      size={20}
+                      thickness={7}
+                      sx={{ color:'white' , position:'absolute' , top:'30%' , left:'105%'} }
+                    />
+                  ) : null}
+                </Observer>
               </MenuItem>
             </Box>
 
@@ -74,14 +83,6 @@ export default function NavBar() {
             </Box>
           </Toolbar>
         </Container>
-        <Observer>
-          {() => uiStore.isLoading ? (
-            <LinearProgress
-              color="secondary"
-              sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 4 }}
-            />
-          ) : null}
-        </Observer>
       </AppBar>
     </Box>
   );

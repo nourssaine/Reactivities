@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import App from "../App";
 import HomePage from "../../../features/activities/home/HomePage";
-import ActivityDashboard from "../../../features/activities/dashboard/activities/dashboard/ActivityDashboard";
+
 import ActivityForm from "../../../features/activities/form/ActivityForm";
 import ActivityDetailsPage from "../../../features/activities/dashboard/activities/dashboard/details/ActivityDetailsPage";
 import Counter from "../../../features/activities/counter/Counter";
@@ -12,6 +12,7 @@ import LoginForm from "../../../features/activities/account/LoginForm";
 import RequireAuth from "./RequireAuth";
 import RegisterForm from "../../../features/activities/account/RegisterForm";
 import ProfilePage from "../../../features/profile/ProfilePage";
+import ActivityDashboard from "../../../features/activities/dashboard/activities/dashboard/ActivityDashboard";
 export const router = createBrowserRouter([
     {
         path: '/',
