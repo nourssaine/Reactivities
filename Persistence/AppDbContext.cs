@@ -35,7 +35,7 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(op
              .OnDelete(DeleteBehavior.Cascade);
             x.HasOne(o => o.Target)
              .WithMany(f => f.Followers)
-             .OnDelete(DeleteBehavior.Cascade);
+             .OnDelete(DeleteBehavior.NoAction);
         });
 
         var dateTimeConverter = new ValueConverter<DateTime, DateTime>(

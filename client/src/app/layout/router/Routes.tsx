@@ -13,6 +13,7 @@ import RequireAuth from "./RequireAuth";
 import RegisterForm from "../../../features/activities/account/RegisterForm";
 import ProfilePage from "../../../features/profile/ProfilePage";
 import ActivityDashboard from "../../../features/activities/dashboard/activities/dashboard/ActivityDashboard";
+import VerifyEmail from "../../../features/activities/account/VerifyEmail";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -34,7 +35,9 @@ export const router = createBrowserRouter([
             { path: 'server-error', element: <ServerError /> },
             { path: '*', element: <Navigate replace to='/not-found' /> },
             { path: 'login', element: <LoginForm /> },
-            { path: 'register', element: <RegisterForm /> }
+            { path: 'register', element: <RegisterForm /> },
+            { path: 'confirm-email', element: <VerifyEmail /> }
+
 
 
 

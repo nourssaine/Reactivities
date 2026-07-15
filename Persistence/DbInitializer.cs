@@ -20,6 +20,8 @@ public class DbInitializer
             foreach (var user in users)
             {
                 await userManager.CreateAsync(user, "Pa$$w0rd");
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                await userManager.ConfirmEmailAsync(user, token);
             }
         }
 
