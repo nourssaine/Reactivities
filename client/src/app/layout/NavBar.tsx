@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Group, Menu as MenuIcon } from "@mui/icons-material";
 import {
-  AppBar, Box, CircularProgress, Container, IconButton, LinearProgress, Menu,
+  AppBar, Box, CircularProgress, Container, IconButton,  Menu,
   MenuItem, Toolbar, Typography, useMediaQuery, useTheme
 } from "@mui/material";
 import { NavLink } from "react-router";

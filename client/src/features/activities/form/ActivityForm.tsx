@@ -3,7 +3,7 @@ import { useActivities } from "../../../lib/hooks/useActivities";
 import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { activitySchema,  type ActivitySchemaInput } from "../../../lib/schemas/activitySchema";
+import { activitySchema,  type ActivitySchema,  type ActivitySchemaInput } from "../../../lib/schemas/activitySchema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import TextInput from "../../../app/layout/shared/componnents/TextInput";
 import SelectInput from "../../../app/layout/shared/componnents/SelectInput";
@@ -12,7 +12,7 @@ import DtaeTimeInput from "../../../app/layout/shared/componnents/DateTimeInput"
 import LocationInput from "../../../app/layout/shared/componnents/LocationInput";
 
 export default function ActivityForm() {
-    const { reset, control, handleSubmit } = useForm<ActivitySchemaInput>({
+    const { reset, control, handleSubmit } = useForm<ActivitySchemaInput, unknown, ActivitySchema>({
         mode: 'onTouched',
         resolver: zodResolver(activitySchema)
     });
@@ -31,7 +31,7 @@ export default function ActivityForm() {
         });
     }, [activity, reset]);
 
-    const OnSubmit = async (data: ActivitySchemaInput) => {
+    const OnSubmit = async (data: ActivitySchema) => {
         const {location, ...rest} = data;
         const flattenedData = {...rest, ...location};
         console.log('Date envoyée:', flattenedData.date);
