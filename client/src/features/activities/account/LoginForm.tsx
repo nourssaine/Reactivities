@@ -15,16 +15,16 @@ export default function LoginForm() {
     const { loginUser, ResendConfirmationEmail } = useAccount();
     const navigate = useNavigate();
     const location = useLocation();
-    const { control, handleSubmit,watch , formState: { isValid, isSubmitting } } = useForm<LoginSchema>({
+    const { control, handleSubmit, watch, formState: { isValid, isSubmitting } } = useForm<LoginSchema>({
         mode: 'onTouched',
         resolver: zodResolver(loginSchema)
     });
     const email = watch('email');
-    const handleResendEmail = async() =>{
+    const handleResendEmail = async () => {
         try {
-            
-        await ResendConfirmationEmail.mutateAsync({email});
-        setNotVerified(false);
+
+            await ResendConfirmationEmail.mutateAsync({ email });
+            setNotVerified(false);
         } catch (error) {
             console.log(error);
             toast.error('Problem sending email - please check email address ')
@@ -70,18 +70,24 @@ export default function LoginForm() {
                     <Typography textAlign='center' color="error">
                         Your email has not been verified , you can click the button to re-send the verification email
                     </Typography>
-                    <Button disabled={ResendConfirmationEmail.isPending} 
-                    onClick={handleResendEmail}>
+                    <Button disabled={ResendConfirmationEmail.isPending}
+                        onClick={handleResendEmail}>
                         Re-send email link
                     </Button>
                 </Box>
             ) : (
-                <Typography sx={{ textAlign: 'center' }}>
-                    Don't have an account?
-                    <Typography sx={{ ml: 2 }} component={Link} to='/register' color="primary">
-                        Sign Up
+                <Box display='flex' alignItems='center' justifyContent='center' gap={3}>
+                    <Typography>
+                        Forgot password? Click <Link to='/forgot-password'>here</Link>
                     </Typography>
-                </Typography>
+                    <Typography sx={{ textAlign: 'center' }}>
+                        Don't have an account?
+                        <Typography sx={{ ml: 2 }} component={Link} to='/register' color="primary">
+                            Sign Up
+                        </Typography>
+                    </Typography>
+                </Box>
+
             )}
 
         </Paper>

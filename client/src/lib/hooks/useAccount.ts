@@ -4,10 +4,19 @@ import agent from "../agent";
 import { useNavigate } from "react-router";
 import type { RegisterSchema } from "../schemas/registerSchema";
 import { toast } from "react-toastify";
+import type { ChanegPasswordSchema } from "../schemas/ChangePasswordSchema";
 
 export const useAccount = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+    const { data: currentUser, isLoading: loadingUserInfo } = useQuery({
+        queryKey: ['user'],
+        queryFn: async () => {
+            const response = await agent.get<User>('/account/user-info');
+            return response.data;
+        },
+        enabled: !queryClient.getQueryData(['user'])
+    })
     const loginUser = useMutation({
         mutationFn: async (creds: LoginSchema) => {
             await agent.post('/login?useCookies=true', creds);
@@ -56,13 +65,21 @@ export const useAccount = () => {
         }
     });
 
-    const { data: currentUser, isLoading: loadingUserInfo } = useQuery({
-        queryKey: ['user'],
-        queryFn: async () => {
-            const response = await agent.get<User>('/account/user-info');
-            return response.data;
-        },
-        enabled: !queryClient.getQueryData(['user'])
+    const changePassword = useMutation({
+        mutationFn: async (data: ChanegPasswordSchema) =>{
+            await agent.post(`/account/change-password`, data);
+        }
+    })
+
+    const forgotPassword = useMutation({
+        mutationFn: async (email: string) =>{
+            await agent.post('/forgotPassword', {email})
+        }
+    })
+    const resetPassword = useMutation({
+        mutationFn: async (data :ResetPassword)=>{
+            await agent.post('/resetPassword', data)
+        }
     })
 
     return {
@@ -72,6 +89,9 @@ export const useAccount = () => {
         loadingUserInfo,
         registerUser,
         verifyEmail,
-        ResendConfirmationEmail
+        ResendConfirmationEmail,
+        changePassword,
+        forgotPassword,
+        resetPassword
     }
 }
