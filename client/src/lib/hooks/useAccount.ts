@@ -82,6 +82,13 @@ export const useAccount = () => {
         }
     })
 
+    const fetchGitHubToken = useMutation({
+        mutationFn: async (code : string) =>{
+            const response = await agent.post(`/account/github-login?code=${code}`);
+            return response.data;
+        }
+    })
+
     return {
         loginUser,
         currentUser,
@@ -92,6 +99,7 @@ export const useAccount = () => {
         ResendConfirmationEmail,
         changePassword,
         forgotPassword,
-        resetPassword
+        resetPassword,
+        fetchGitHubToken
     }
 }
